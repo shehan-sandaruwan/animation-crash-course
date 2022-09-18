@@ -1,0 +1,88 @@
+@import './styles/base.scss';
+
+body {
+  font-family: 'Open Sans', sans-serif;
+  padding: 5vmin;
+  background-color: #f4f4f4;
+}
+
+a {
+  color: blue;
+}
+
+h1 {
+  margin: 0;
+}
+
+small {
+  text-transform: uppercase;
+  font-weight: bold;
+}
+
+ul {
+  margin: 1rem 0;
+}
+
+.container {
+  display: block;
+  left: 50vw;
+}
+
+.ball {
+  --duration: 1s;
+  --stagger: 0.5s;
+  --intervals: calc(var(--duration)  - var(--stagger));
+  height: 5vmin;
+  width: 5vmin;
+  border-radius: 50%;
+  background-color: #fb2324;
+  animation: move-right var(--duration) calc(var(--intervals) * var(--i)) both;
+}
+
+#app {
+  --bg: white;
+
+  &[data-state="loading"]{
+    --bg: orange;
+  }
+
+  &[data-state="success"]{
+    --bg: rgb(0, 255, 106);
+  }
+
+
+  background-color: var(--bg);
+}
+
+.button{
+  appearance: none;
+  font-size: 1.2rem;
+  border: none;
+  background-color: blue;
+  padding: 1rem;
+  color: white;
+}
+
+.button:active{
+  animation-duration: 0.15s;
+  transform: translateY(20px);
+}
+
+@keyframes move-right {
+  from {
+    transform: none;
+  }
+  to {
+    transform: translateX(25vw);
+  }
+  
+}
+
+@keyframes slide-ball{
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(50vw);
+  }
+}

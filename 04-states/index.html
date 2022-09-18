@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>States</title>
+    <link rel="stylesheet" href="style.scss" />
+  </head>
+  <body>
+    <form class="ui-form" data-state="subscribe">
+      <input class="ui-input" type="email" placeholder="your@email.com" />
+      <button class="ui-button" type="button" onclick="setState()">
+        Subscribe
+      </button>
+    </form>
+  </body>
+  <script> 
+    const form = document.querySelector('.ui-form');
+    const machine = {
+      subscribe: {
+        on: {'CLICK': "subscribing"},
+        buttonName: "Subscribing"
+      },
+      subscribing: {
+        on: {'SUCCESS': "success",
+        'ERORR': "error"},
+      },
+      success: {
+        on: {'CLICK': "subscribe"}, 
+        buttonName: "Subscribe",
+      },
+      error: {
+        on: {'CLICK': "subscribe"},
+        buttonName: "Subscribe",
+      },
+    }
+
+    const buttonEl = document.querySelector('.ui-button');
+    const inputEl = document.querySelector('.ui-input');
+
+     function setState() {
+      const rand =Math.floor( Math.random() * 10);
+      const currentState = form.dataset.state;
+      let newState;
+      console.log(rand)
+      if (currentState === "subscribing") {
+        if (rand % 2 === 0) {
+          newState =  "success";
+          buttonEl.innerText = "Success!";
+        } else {
+          newState = "error"
+          buttonEl.innerText = "Error!";
+        }
+      } else {
+        newState = machine[currentState].on["CLICK"];
+        buttonEl.innerText =  machine[currentState].buttonName;
+
+        if (newState === "subscribing") {
+          setTimeout(()=>{
+            setState();
+          }, 2000)
+        }
+      }
+      form.setAttribute('data-state', newState);
+    };
+    // ...
+  </script>
+</html>
